@@ -356,7 +356,7 @@ class Layer:
         for (name, layer) in self.config.layers.items():
             if layer is self:
                 return name
-
+        return self.key.split(",")[0]
         return None
 
     def getTileResponse(self, coord, extension, ignore_cached=False):
@@ -384,6 +384,7 @@ class Layer:
         if not ignore_cached:
             # Start by checking for a tile in the cache.
             try:
+                logging.info("I'm trying to read the body, I'm a "+self.__class__.__name__)
                 body = cache.read(self, coord, format)
             except TheTileLeftANote as e:
                 headers = e.headers
